@@ -21,7 +21,12 @@
 ------------------------------------------------------------------------------
 -- Copyright (C) 2019 L. Dries                                              --
 -- Buffer.ads Version 1.00 dd. 14-01-2019  Author L Dries                   --
-------------------------------------------------------------------------------1
+------------------------------------------------------------------------------
+-- Copyricht (C) 2020 L. Dries                                              --
+-- Buffer.ads Version 1.10 dd. 16-04-2020  Author L Dries                   --
+-- Problem with Renumber Solved                                             --
+-- Insert_Buffer returns the buffer number of the inserted item             --
+------------------------------------------------------------------------------
 
 generic
    type Item is private;
@@ -43,7 +48,7 @@ package Buffer is
 -- Fill a Buffer Element before or after then mentioned element nr
 -- where the standard is after the mentioned element
 --------------------------------------------------------------------------------
-   procedure Insert_Buffer ( inp : item; bp: integer; Dir: Buffer_Dir := after);
+   procedure Insert_Buffer ( inp : item; bp: in out integer; Dir: Buffer_Dir := after);
 
 --------------------------------------------------------------------------------
 -- Get the value of the mentioned element
@@ -83,4 +88,5 @@ private
 -- Renumber all the elements in the buffer
 --------------------------------------------------------------------------------
    procedure Renumber;
+
 end Buffer;

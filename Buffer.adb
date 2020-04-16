@@ -21,7 +21,12 @@
 ------------------------------------------------------------------------------
 -- Copyright (C) 2019 L. Dries                                              --
 -- Buffer.adb Version 1.00 dd. 14-01-2019  Author L Dries                   --
-------------------------------------------------------------------------------1
+------------------------------------------------------------------------------
+-- Copyricht (C) 2020 L. Dries                                              --
+-- Buffer.adb Version 1.10 dd. 16-04-2020  Author L Dries                   --
+-- Problem with Renumber Solved                                             --
+-- Insert_Buffer returns the buffer number of the inserted item             --
+------------------------------------------------------------------------------
 
 package body Buffer is
 
@@ -64,9 +69,10 @@ package body Buffer is
       end if;
    end;
 
-   procedure Insert_Buffer ( inp : item; bp: integer; Dir: Buffer_Dir := after) is
-      El  : Buffer_Pointer := FirstBuffer;
-      El1 : Buffer_Pointer;
+   procedure Insert_Buffer ( inp : item; bp: in out integer; Dir: Buffer_Dir := after) is
+      El     : Buffer_Pointer := FirstBuffer;
+      El1    : Buffer_Pointer;
+      New_El : Buffer_Pointer;
    begin
       if Nr_Items < bp then
          Set_Buffer(inp);
@@ -75,6 +81,7 @@ package body Buffer is
             El := El.next;
          end loop;
          El1 := new Block_Buffer;
+         New_El := El1;
          El1.buf := inp;
          if Dir = after then
             El1.previous := El;
@@ -94,8 +101,9 @@ package body Buffer is
             else
                FirstBuffer := El1;
             end if;
-            Renumber;
          end if;
+         Renumber;
+         bp := New_El.nr;
       end if;
    end;
 
